@@ -38,7 +38,7 @@ ABC-Zをゲーム機のコントローラで使用するためのソースコー
 ![image](https://user-images.githubusercontent.com/43605763/185802888-962c7d67-b286-45b4-8abc-6b16a9cc2b04.png)
 
 
-4. 3のディレクトリを***CIRCUITPY***の直下に放り込む
+4. 3のディレクトリ***/lib***を***CIRCUITPY***の直下に放り込む
 
 # ソースコードの入手とインストール
 ***CIRCUITPY***に***code.py***をドラッグ＆ドロップする
