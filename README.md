@@ -28,13 +28,8 @@ ABC-Zをゲーム機のコントローラで使用するためのソースコー
 ![image](https://user-images.githubusercontent.com/43605763/185802707-b66e42cc-9f02-4a70-8974-5c61c6941ead.png)
 
 3. ***/lib*** から以下のディレクトリとファイルをディレクトリ***lib***に抽出(コピー)しておく
-  - [dir] adafruit_hid ※ディレクトリ丸ごと
-  - [file] adafruit_debouncer.mpy
-  - [file] adafruit_pixelbuf.mpy
-  - [file] adafruit_pypixelbuf.py
-  - [file] adafruit_ticks.mpy
-  - [file] neopixel.mpy
-
+  - adafruit_hid はディレクトリ丸ごと
+ 
 ![image](https://user-images.githubusercontent.com/43605763/185802888-962c7d67-b286-45b4-8abc-6b16a9cc2b04.png)
 
 
