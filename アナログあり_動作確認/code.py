@@ -62,23 +62,25 @@ while True: #無限ループ
 
   #アナログ入力の確認
   for ii in range( len(KeyAna) ):
-    myAnalog = analogio.AnalogIn( KeyAna[ii] ) - AxisInt[jj]
-    if ii==0 and flag==False :
-      if myAnalog >= ThrAna :
+    myAnalog = analogio.AnalogIn( KeyAna[ii] ) - AxisInt[jj]  #現在のアナログ入力から初期値を引いた値(無負荷で≒0)
+    if ii==0 and flag==False :  #x軸の場合
+      if myAnalog >= ThrAna : #右にしきい値よりも倒した場合
         lyo.write('Right\n') 
         flag=True; break
-      elif myAnalog <= -ThrAna :
+      elif myAnalog <= -ThrAna : #左にしきい値よりも倒した場合
         lyo.write('Left\n')
         flag=True; break
-    elif ii==1 and flag==False:
-      if myAnalog >= ThrAna :
+      else :
+        flag=False; break
+    elif ii==1 and flag==False: #y軸の処理
+      if myAnalog >= ThrAna : #上にしきい値よりも倒した場合
         lyo.write('Up\n')
         flag=True; break
-      elif myAnalog <= -ThrAna :
+      elif myAnalog <= -ThrAna : #下にしきい値よりも倒した場合
         lyo.write('Down\n')
         flag=True; break
-    else :
-      flag=False; break
+      else :
+        flag=False; break
 
 
   #デジタル(ボタン)の確認
