@@ -62,18 +62,19 @@ while True: #無限ループ
 
   #アナログ入力の確認
   for ii in range( len(KeyAna) ):
+    myAnalog = analogio.AnalogIn( KeyAna[ii] ) - AxisInt[jj]
     if ii==0 and flag==False :
-      if analogio.AnalogIn( KeyAna[ii] ) >= ThrAna :
+      if myAnalog >= ThrAna :
         lyo.write('Right\n') 
         flag=True; break
-      elif analogio.AnalogIn( KeyAna[ii] ) <= -ThrAna :
+      elif myAnalog <= -ThrAna :
         lyo.write('Left\n')
         flag=True; break
     elif ii==1 and flag==False:
-      if analogio.AnalogIn( KeyAna[ii] ) >= ThrAna :
+      if myAnalog >= ThrAna :
         lyo.write('Up\n')
         flag=True; break
-      elif analogio.AnalogIn( KeyAna[ii] ) <= -ThrAna :
+      elif myAnalog <= -ThrAna :
         lyo.write('Down\n')
         flag=True; break
     else :
