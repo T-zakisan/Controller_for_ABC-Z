@@ -1,5 +1,8 @@
 # Controller for ABC-Z
-ABC-Zをゲーム機のコントローラで使用するためのソースコード(CircuitPython)を配布、解説
+ABC-Zをゲーム機のコントローラで使用するためのソースコード(CircuitPython)を配布、解説(コードにできるだけ多くコメント)。
+
+好きなように改変することを推奨。
+
 
 # 準備
 ## Seeed XIAO PR2040 を入手
