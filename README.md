@@ -40,7 +40,8 @@ ABC-Zをゲーム機のコントローラで使用するためのソースコー
 
 # ソースコードの入手とインストール
 ## 入手
-1. 上記の![image](https://user-images.githubusercontent.com/43605763/185816755-274966f1-dd49-43e4-8351-574af56ccea4.png)の***Code▼***をクリック
+1. 上記の![image](https://user-images.githubusercontent.com/43605763/186346284-155919a4-edf8-4373-bf9f-97778d5a4871.png)
+の***Code▼***をクリック
 2. ***Download ZIP***をクリック
 3. ダウンロードしたzipファイルを展開
 4. 以下フォルダ内にそれぞれ***code.py***があるか念のため確認
