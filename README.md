@@ -57,3 +57,5 @@
 ***CIRCUITPY***に必要に応じた***code.py***をドラッグ＆ドロップする
 
 ※事前に、各ボタンとSeeed XIAO PR2040 の端子をはんだ付けしておくこと！
+
+![image](https://user-images.githubusercontent.com/43605763/186352581-a76f5442-3beb-4440-bfcb-bcfb411125ad.png)
