@@ -33,7 +33,8 @@ https://user-images.githubusercontent.com/43605763/186742775-77fb4bad-561c-4811-
 ![image](https://user-images.githubusercontent.com/43605763/185802350-7a6c4999-844f-4b76-9860-59f934375b84.png)
 
 2. ダウンロードしたライブラリを解凍
-下図に示すディレクトリとファイルが生成される。
+
+下図のディレクトリとファイルが生成される。
 
 ![image](https://user-images.githubusercontent.com/43605763/185802707-b66e42cc-9f02-4a70-8974-5c61c6941ead.png)
 
