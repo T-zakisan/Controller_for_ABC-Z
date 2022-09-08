@@ -19,15 +19,14 @@ https://user-images.githubusercontent.com/43605763/186742775-77fb4bad-561c-4811-
 - [SWITCHSCIENCE](https://www.switch-science.com/catalog/7634/)
 - [秋月電子通称](https://akizukidenshi.com/catalog/g/gM-17044/)
 - [マルツオンライン](https://www.marutsu.co.jp/pc/i/2229736/)
-　
+
 
 ## ファームウェアを入手とインストール
  [本家WebSiteの説明](https://wiki.seeedstudio.com/XIAO-RP2040-with-CircuitPython/)
-- google翻訳を活用すると良い
 - ファームウェア(.uf2)は、[CircuitPython本家](https://circuitpython.org/board/seeeduino_xiao_rp2040/)から入手
-- "LED Flash Tutorial"は不要
-- Seeed XIAO PR2040 が "CIRCUITPY"と表示されたらok
-　
+- 上記説明サイトの"LED Flash Tutorial"以降は不要
+- PC上で、Seeed XIAO PR2040 が "CIRCUITPY"と表示されたらok
+
 
 ## ライブラリの入手とインストール　
 1. [CircuitPython本家のライブラリ配布場所](https://circuitpython.org/libraries)アクセスし、下図からライブラリをダウンロード
