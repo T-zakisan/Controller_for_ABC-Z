@@ -43,7 +43,7 @@ GPIO =  []  #空リスト(≒配列)定義
 for ii in KeyDig : #ボタンの数で繰り返し
   tmp = digitalio.DigitalInOut( ii )  #GPIO(ii)を使用
   tmp.pull = digitalio.Pull.UP        #プルアップで使用
-GPIO.append( Debouncer( tmp ) )     #リスト(GPIO)にリスト登録(追加)
+  GPIO.append( Debouncer( tmp ) )     #リスト(GPIO)にリスト登録(追加)
 
 
 
