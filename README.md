@@ -56,11 +56,6 @@ https://user-images.githubusercontent.com/43605763/186742775-77fb4bad-561c-4811-
 ![image](https://user-images.githubusercontent.com/43605763/186346284-155919a4-edf8-4373-bf9f-97778d5a4871.png)
 
 3. ダウンロードしたzipファイルを解凍
-4. 以下フォルダ内にそれぞれ***code.py***があるか念のため確認
- - アナログなし_動作確認
- - アナログなし_ABC-Z
- - アナログあり_動作確認
- - アナログなし_ABC-Z
 
 
 ## インストール
