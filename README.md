@@ -64,3 +64,15 @@ https://user-images.githubusercontent.com/43605763/186742775-77fb4bad-561c-4811-
 ※事前に、各ボタンとSeeed XIAO PR2040 の端子をはんだ付けし、それに合わせてソースコードを調整すること！
 
 ![image](https://user-images.githubusercontent.com/43605763/186352581-a76f5442-3beb-4440-bfcb-bcfb411125ad.png)
+
+### 動作確認
+
+Seeed XIAO PR2040 の端子とボタンの結線関係が不明な場合は、本番用プログラム(\*_ABC-Z)の設定値がわからない。
+
+そこで、** プログラム動作確認用シート.xlsx **開き、下図の1行目に示すボタンを2行目で各ボタンを押していく。
+
+そのとき入力された数値を本番用プログラムの設定値となる(Xは10とすること)。
+
+![image](https://user-images.githubusercontent.com/43605763/189506775-4bb8e82b-8868-4ed1-b66e-a291e4e575c3.png)
+
+
