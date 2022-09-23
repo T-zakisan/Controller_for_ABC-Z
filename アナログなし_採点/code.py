@@ -1,5 +1,5 @@
 '''
-2022年9月19日
+2022年9月23日
 ■■■ ABC-Z専用の入力キーボード　for PS用コントローラ(アナログなし動作確認) ■■■
   プレステのコントローラを採点ソフトABC用にチューニング
   〇、△、☓、次の問題、前の問題、十字キーだけでなく、一括やフィルタにも対応
@@ -60,30 +60,28 @@ def MoveOrigin(  ):
   for ii in range( 11, 0, -1 ): mus.move( -2**ii, -2**ii, 0 ) # 2^11(=2048px) -> 2^0(=1px) で各移動量=全移動量(4097px:大画面にも対応であろう)
 
 
-
 ''' All '''
 def Allxx( FLAG ) :
   MoveOrigin( )                     #原点復帰
-  if   FLAG==0 : mus.move( 366, 38, 0 ) #ALLｘ
+  if   FLAG==0 : mus.move( 322, 38, 0 ) #ALL△
   elif FLAG==1 : mus.move( 278, 38, 0 ) #All○
-  elif FLAG==2 : mus.move( 322, 38, 0 ) #ALL△
+  elif FLAG==2 : mus.move( 366, 38, 0 ) #ALLｘ
   elif FLAG==3 : mus.move( 410, 38, 0 ) #ALL--
   mus.click( Mouse.LEFT_BUTTON )    #右クリ
   myPush( Keycode.ENTER )
   myPush( Keycode.TAB )
 
 
-
 ''' Filter '''
 def Fltxx( FLAG ) :
   MoveOrigin( )                     #原点復帰
-  if   FLAG==0 : mus.move( 323, 76, 0 ) ; nn = 7  #Filterｘ
-  elif FLAG==1 : mus.move( 297, 76, 0 ) ; nn = 9  #Filter○
-  elif FLAG==2 : mus.move( 310, 76, 0 ) ; nn = 8  #Filter△
-  elif FLAG==3 : mus.move( 336, 76, 0 ) ; nn = 6  #Filter未
-  elif FLAG==4 : mus.move( 285, 76, 0 ) ; nn = 10 #FilterCancel
-  mus.click( Mouse.LEFT_BUTTON )    #右クリ
-  myPush( Keycode.ENTER )
+  if   FLAG==0 : mus.move( 338, 76, 0 ) ; nn = 8  #Filter△
+  elif FLAG==1 : mus.move( 325, 76, 0 ) ; nn = 9  #Filter○
+  elif FLAG==2 : mus.move( 350, 76, 0 ) ; nn = 7  #Filterｘ
+  elif FLAG==3 : mus.move( 355, 76, 0 ) ; nn = 6  #Filter未
+  elif FLAG==4 : mus.move( 311, 76, 0 ) ; nn = 10 #FilterCancel
+  mus.click( Mouse.LEFT_BUTTON )  #右クリ
+  myPush( Keycode.ENTER )         #Enter
   for ii in range( nn ):
     myPush( Keycode.TAB ) #TABを押離	※自然な挙動用(カーソル移動)
     
@@ -99,10 +97,10 @@ def myPush( key ):
 myKey = [ [ board.D0, board.D1, board.D2, board.D3, board.D4, board.D5, board.D6, board.D7, board.D8, board.D9, board.D10 ],
           []]  #空リスト
 myFile = open ( 'CodeTable.txt', 'r' )  #ファイルを読み込みモードで開く
-DataList = myFile.readlines() #各行ごとに抽出
-for ii in range( len(DataList) ) :
+DataList = myFile.readlines() #各行ごとに読み込み
+for ii in range( len(DataList) ) :  #読み込んだ行数で繰り返し
   #print( DataList[ii][DataList[ii].find(',')+1:].strip() )
-  myKey[1] += [ int( DataList[ ii ][ DataList[ii].find(',')+1: ].strip() ) ]
+  myKey[1] += [ int( DataList[ ii ][ DataList[ii].find(',')+1: ].strip() ) ]  #コンマ以降の文字を抽出(空白削除、テキスト→数値化)
 myFile.close()  #ファイルを閉じる
 
 
@@ -143,7 +141,8 @@ while True:
   if FlagAll==True and GPIO[ myKey[1][4] ].fell: Allxx( 0 ) #All△
   if FlagAll==True and GPIO[ myKey[1][5] ].fell: Allxx( 1 ) #All〇
   if FlagAll==True and GPIO[ myKey[1][6] ].fell: Allxx( 2 ) #All×
-
+  # if FlagAll==True and GPIO[ myKey[1][ ] ].fell: Allxx( 3 ) #All--
+  
 
   # FilterXX(L2+a)
   if GPIO[ myKey[1][8] ].fell: FlagFlt = True	#L2押でフラフ立てる
@@ -151,5 +150,6 @@ while True:
   if FlagFlt==True and GPIO[ myKey[1][4] ].fell  : Fltxx( 0 ) #Filter△
   if FlagFlt==True and GPIO[ myKey[1][5] ].fell  : Fltxx( 1 ) #Filter〇
   if FlagFlt==True and GPIO[ myKey[1][6] ].fell  : Fltxx( 2 ) #Filter×
+  #if FlagFlt==True and GPIO[ myKey[1][--] ].fell : Fltxx( 3 ) #Filter--
   if FlagFlt==True and GPIO[ myKey[1][10] ].fell : Fltxx( 4 ) #Filter解除
   
