@@ -1,5 +1,5 @@
 '''
-2022年9月23日
+2022年9月29日
 ■■■ ABC-Z専用の入力キーボード　for PS用コントローラ(アナログなし動作確認) ■■■
   プレステのコントローラを採点ソフトABC用にチューニング
   〇、△、☓、次の問題、前の問題、十字キーだけでなく、一括やフィルタにも対応
@@ -53,11 +53,13 @@ from adafruit_debouncer import Debouncer    #GPIOの設定で必要なヤツ
 mus = Mouse(usb_hid.devices)          #マウス
 kbd = Keyboard(usb_hid.devices)       #キーボード
 
+
 ''' 原点復帰 '''
   # 移動量を指数のカウントダウンとすることで少ない手数で基準座標(左上)に移動
   # 【注意】サブモニタを左上に設置は×
 def MoveOrigin(  ):
   for ii in range( 11, 0, -1 ): mus.move( -2**ii, -2**ii, 0 ) # 2^11(=2048px) -> 2^0(=1px) で各移動量=全移動量(4097px:大画面にも対応であろう)
+
 
 
 ''' All '''
@@ -72,19 +74,23 @@ def Allxx( FLAG ) :
   myPush( Keycode.TAB )
 
 
+
 ''' Filter '''
 def Fltxx( FLAG ) :
   MoveOrigin( )                     #原点復帰
-  if   FLAG==0 : mus.move( 338, 76, 0 ) ; nn = 8  #Filter△
-  elif FLAG==1 : mus.move( 325, 76, 0 ) ; nn = 9  #Filter○
-  elif FLAG==2 : mus.move( 350, 76, 0 ) ; nn = 7  #Filterｘ
+  if   FLAG==0 : mus.move( 335, 76, 0 ) ; nn = 8  #Filter△
+  elif FLAG==1 : mus.move( 323, 76, 0 ) ; nn = 9  #Filter○
+  elif FLAG==2 : mus.move( 349, 76, 0 ) ; nn = 7  #Filterｘ
   elif FLAG==3 : mus.move( 355, 76, 0 ) ; nn = 6  #Filter未
   elif FLAG==4 : mus.move( 311, 76, 0 ) ; nn = 10 #FilterCancel
+  elif FLAG==9 : return
   mus.click( Mouse.LEFT_BUTTON )  #右クリ
   myPush( Keycode.ENTER )         #Enter
   for ii in range( nn ):
     myPush( Keycode.TAB ) #TABを押離	※自然な挙動用(カーソル移動)
-    
+  return FLAG
+
+
 
 ''' 任意キーを押して放すヤツ '''
 def myPush( key ):
@@ -93,29 +99,31 @@ def myPush( key ):
   kbd.release( key )      #押したら戻す
 
 
+
 ''' ボタンの割り当て '''
 myKey = [ [ board.D0, board.D1, board.D2, board.D3, board.D4, board.D5, board.D6, board.D7, board.D8, board.D9, board.D10 ],
           []]  #空リスト
 myFile = open ( 'CodeTable.txt', 'r' )  #ファイルを読み込みモードで開く
 DataList = myFile.readlines() #各行ごとに読み込み
 for ii in range( len(DataList) ) :  #読み込んだ行数で繰り返し
-  #print( DataList[ii][DataList[ii].find(',')+1:].strip() )
   myKey[1] += [ int( DataList[ ii ][ DataList[ii].find(',')+1: ].strip() ) ]  #コンマ以降の文字を抽出(空白削除、テキスト→数値化)
 myFile.close()  #ファイルを閉じる
+
 
 
 ''' SW用GPIOの初期設定(プルアップ) '''
 GPIO =  []  #空リスト(≒配列)定義
 for ii in myKey[0] : #ボタンの数で繰り返し
-#for ii in myKey : #ボタンの数で繰り返し
   tmp = digitalio.DigitalInOut( ii )  #GPIO(ii)を使用
   tmp.pull = digitalio.Pull.UP        #プルアップで使用
   GPIO.append( Debouncer( tmp ) )     #リスト(GPIO)にリスト登録(追加)
 
 
+
 ''' Main Loop '''
 FlagAll = False		#R2の状態　※ブロック用
 FlagFlt = False		#L2の状態
+Mode = 4 #Filter解除
 while True:
   for ii in range( len( GPIO ) ): #ボタンの数で繰り返し　
 
@@ -129,27 +137,28 @@ while True:
       elif myKey[1][4]==ii  : myPush( Keycode.C )  #△
       elif myKey[1][5]==ii  : myPush( Keycode.Z )  #〇
       elif myKey[1][6]==ii  : myPush( Keycode.X )  #✕
-      elif myKey[1][7]==ii  : myPush( Keycode.P )  #戻
+      elif myKey[1][7]==ii  : myPush( Keycode.P ) ; MODE = Fltxx( MODE ) #戻
       elif myKey[1][8]==ii  : pass #Filter(L2)
-      elif myKey[1][9]==ii  : myPush( Keycode.N )  #次
+      elif myKey[1][9]==ii  : myPush( Keycode.N ) ; MODE = Fltxx( MODE ) #次
       elif myKey[1][10]==ii : pass #ALL(R2)
 
   
   # Allxx(R2+a)
   if GPIO[ myKey[1][10] ].fell: FlagAll = True	#R2押でフラフ立てる
   if GPIO[ myKey[1][10] ].rose: FlagAll = False	#R2戻でフラフ下ろす
-  if FlagAll==True and GPIO[ myKey[1][4] ].fell: Allxx( 0 ) #All△
-  if FlagAll==True and GPIO[ myKey[1][5] ].fell: Allxx( 1 ) #All〇
-  if FlagAll==True and GPIO[ myKey[1][6] ].fell: Allxx( 2 ) #All×
-  # if FlagAll==True and GPIO[ myKey[1][ ] ].fell: Allxx( 3 ) #All--
-  
+  if FlagAll==True and GPIO[ myKey[1][4] ].fell : Allxx( 0 ) #All△
+  if FlagAll==True and GPIO[ myKey[1][5] ].fell : Allxx( 1 ) #All〇
+  if FlagAll==True and GPIO[ myKey[1][6] ].fell : Allxx( 2 ) #All×
+  # if FlagAll==True and GPIO[ myKey[1][ ] ].fell : Allxx( 3 ) #All--
+  if FlagAll==True and GPIO[ myKey[1][8] ].fell : MODE = Fltxx( 4 ) #Filter解除
+
 
   # FilterXX(L2+a)
   if GPIO[ myKey[1][8] ].fell: FlagFlt = True	#L2押でフラフ立てる
   if GPIO[ myKey[1][8] ].rose: FlagFlt = False	#L2戻でフラフ下ろす
-  if FlagFlt==True and GPIO[ myKey[1][4] ].fell  : Fltxx( 0 ) #Filter△
-  if FlagFlt==True and GPIO[ myKey[1][5] ].fell  : Fltxx( 1 ) #Filter〇
-  if FlagFlt==True and GPIO[ myKey[1][6] ].fell  : Fltxx( 2 ) #Filter×
-  #if FlagFlt==True and GPIO[ myKey[1][--] ].fell : Fltxx( 3 ) #Filter--
-  if FlagFlt==True and GPIO[ myKey[1][10] ].fell : Fltxx( 4 ) #Filter解除
+  if FlagFlt==True and GPIO[ myKey[1][4] ].fell  : MODE = Fltxx( 0 ) #Filter△
+  if FlagFlt==True and GPIO[ myKey[1][5] ].fell  : MODE = Fltxx( 1 ) #Filter〇
+  if FlagFlt==True and GPIO[ myKey[1][6] ].fell  : MODE = Fltxx( 2 ) #Filter×
+  #if FlagFlt==True and GPIO[ myKey[1][--] ].fell : MODE = Fltxx( 3 ) #Filter--
+  if FlagFlt==True and GPIO[ myKey[1][10] ].fell : MODE = Fltxx( 4 ) #Filter解除
   
