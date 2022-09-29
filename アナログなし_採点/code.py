@@ -39,6 +39,7 @@
 
 # パラメータ ####################################################################
 MYDELAY = 0.1       #遅延時間[秒]　※特に問題なければ触る必要なし！
+MYSHIFT = 0         #フィルターボタン位置の右方向への移動(左方向は負にする)
 #################################################################################
 
 import time       #for sleep
@@ -78,17 +79,17 @@ def Allxx( FLAG ) :
 ''' Filter '''
 def Fltxx( FLAG ) :
   MoveOrigin( )                     #原点復帰
-  if   FLAG==0 : mus.move( 335, 76, 0 ) ; nn = 8  #Filter△
-  elif FLAG==1 : mus.move( 323, 76, 0 ) ; nn = 9  #Filter○
-  elif FLAG==2 : mus.move( 349, 76, 0 ) ; nn = 7  #Filterｘ
-  elif FLAG==3 : mus.move( 355, 76, 0 ) ; nn = 6  #Filter未
-  elif FLAG==4 : mus.move( 311, 76, 0 ) ; nn = 10 #FilterCancel
+  if   FLAG==0 : mus.move( 335 + MYSHIFT, 76, 0 ) ; nn = 8  #Filter△
+  elif FLAG==1 : mus.move( 323 + MYSHIFT, 76, 0 ) ; nn = 9  #Filter○
+  elif FLAG==2 : mus.move( 349 + MYSHIFT, 76, 0 ) ; nn = 7  #Filterｘ
+  elif FLAG==3 : mus.move( 355 + MYSHIFT, 76, 0 ) ; nn = 6  #Filter未
+  elif FLAG==4 : mus.move( 311 + MYSHIFT, 76, 0 ) ; nn = 10 #FilterCancel
   elif FLAG==9 : return
   mus.click( Mouse.LEFT_BUTTON )  #右クリ
   myPush( Keycode.ENTER )         #Enter
   for ii in range( nn ):
     myPush( Keycode.TAB ) #TABを押離	※自然な挙動用(カーソル移動)
-  return FLAG
+  return FLAG #Filter状態を戻す
 
 
 
