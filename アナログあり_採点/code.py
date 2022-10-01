@@ -1,4 +1,5 @@
 '''
+2022年10月01日
 ■■■ ABC-Z専用の入力キーボード　for PS用コントローラ ■■■
   採点ソフトABC用にチューニングしたコントローラで、〇、△、☓、次の問題、前の問題、十字キーだけでなく、一括〇などにも対応している。
 
@@ -100,11 +101,11 @@ def Allxx( FLAG ) :
 ''' Filter '''
 def Fltxx( FLAG ) :
   MoveOrigin( )                     #原点復帰
-  if   FLAG==0 : mus.move( 335 + MYSHIFT, 76, 0 ) ; nn = 8  #Filter△
-  elif FLAG==1 : mus.move( 323 + MYSHIFT, 76, 0 ) ; nn = 9  #Filter○
-  elif FLAG==2 : mus.move( 349 + MYSHIFT, 76, 0 ) ; nn = 7  #Filterｘ
-  elif FLAG==3 : mus.move( 360 + MYSHIFT, 76, 0 ) ; nn = 6  #Filter□
-  elif FLAG==4 : mus.move( 311 + MYSHIFT, 76, 0 ) ; nn = 10 #FilterCancel
+  if   FLAG==0 : mus.move( 338 + MYSHIFT, 76, 0 ) ; nn = 8  #Filter△
+  elif FLAG==1 : mus.move( 325 + MYSHIFT, 76, 0 ) ; nn = 9  #Filter○
+  elif FLAG==2 : mus.move( 351 + MYSHIFT, 76, 0 ) ; nn = 7  #Filterｘ
+  elif FLAG==3 : mus.move( 364 + MYSHIFT, 76, 0 ) ; nn = 6  #Filter□
+  elif FLAG==4 : mus.move( 312 + MYSHIFT, 76, 0 ) ; nn = 10 #FilterCancel
   elif FLAG==9 : return   
   mus.click( Mouse.LEFT_BUTTON )    #右クリ
   myPush( Keycode.ENTER )
