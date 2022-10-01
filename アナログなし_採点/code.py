@@ -1,11 +1,8 @@
 '''
-2022年9月29日
+2022年10月01日
 ■■■ ABC-Z専用の入力キーボード　for PS用コントローラ(アナログなし動作確認) ■■■
   プレステのコントローラを採点ソフトABC用にチューニング
   〇、△、☓、次の問題、前の問題、十字キーだけでなく、一括やフィルタにも対応
-
-
-
 ■動作と対応ボタン
 [シングル]
     ボタン   |     機能     
@@ -16,8 +13,6 @@
      R1      |   次
    Select    |   機能なし
    Start     |   機能なし
-
-
 [コンビネーション] ※L2/R2を先に押す！
         |     L2     |     R2     |
 -----------------------------------
@@ -26,9 +21,6 @@
    △   |   一括△   |   △のみ   |
    上   |   一括未   |   未のみ   |←未実装！必要に応じて追加してみてください！
    L2   |    ----    |   全表示   | フィルター解除
-
-
-
 ■使用条件
 ・ディスプレイの拡大を100%（デスクトップ上で右クリック > ディスプレイ設定 > 拡大と縮小 : 100%）
 ・外部ディスプレイ使用していて、以下の2項目が該当している場合、想定している動作にならないため、ディスプレイ配置(ディスプレイ設定)を変更すること！
@@ -79,11 +71,11 @@ def Allxx( FLAG ) :
 ''' Filter '''
 def Fltxx( FLAG ) :
   MoveOrigin( )                     #原点復帰
-  if   FLAG==0 : mus.move( 335 + MYSHIFT, 76, 0 ) ; nn = 8  #Filter△
-  elif FLAG==1 : mus.move( 323 + MYSHIFT, 76, 0 ) ; nn = 9  #Filter○
-  elif FLAG==2 : mus.move( 349 + MYSHIFT, 76, 0 ) ; nn = 7  #Filterｘ
-  elif FLAG==3 : mus.move( 355 + MYSHIFT, 76, 0 ) ; nn = 6  #Filter未
-  elif FLAG==4 : mus.move( 311 + MYSHIFT, 76, 0 ) ; nn = 10 #FilterCancel
+  if   FLAG==0 : mus.move( 338 + MYSHIFT, 76, 0 ) ; nn = 8  #Filter△
+  elif FLAG==1 : mus.move( 325 + MYSHIFT, 76, 0 ) ; nn = 9  #Filter○
+  elif FLAG==2 : mus.move( 351 + MYSHIFT, 76, 0 ) ; nn = 7  #Filterｘ
+  elif FLAG==3 : mus.move( 364 + MYSHIFT, 76, 0 ) ; nn = 6  #Filter未
+  elif FLAG==4 : mus.move( 312 + MYSHIFT, 76, 0 ) ; nn = 10 #FilterCancel
   elif FLAG==9 : return
   mus.click( Mouse.LEFT_BUTTON )  #右クリ
   myPush( Keycode.ENTER )         #Enter
@@ -162,4 +154,3 @@ while True:
   if FlagFlt==True and GPIO[ myKey[1][6] ].fell  : MODE = Fltxx( 2 ) #Filter×
   #if FlagFlt==True and GPIO[ myKey[1][--] ].fell : MODE = Fltxx( 3 ) #Filter--
   if FlagFlt==True and GPIO[ myKey[1][10] ].fell : MODE = Fltxx( 4 ) #Filter解除
-  
