@@ -94,7 +94,5 @@ https://user-images.githubusercontent.com/43605763/186742775-77fb4bad-561c-4811-
 上記の「_採点」内にある***code.py***を***CIRCUITPY***にドラッグ＆ドロップする。
 
 以上
-![無題](https://user-images.githubusercontent.com/43605763/193412433-27ef0b59-3ff2-4b9f-b67c-aad0a8d484f2.png)
-
 
 
