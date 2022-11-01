@@ -6,7 +6,7 @@
 '''
 
 # パラメータ #####################################################################
-MYDELAY = 0.1       #遅延時間[秒]　※特に問題なければ触る必要なし！
+MYDELAY = 0.0       #遅延時間[秒]　※特に問題なければ触る必要なし！
 ANALOG = 60         #アナログ入力の動作しきい値(大:大きく倒して反応  小:僅かな傾きで反応　※0 <= ThrAna <= 127)
 #################################################################################
 
@@ -34,10 +34,10 @@ def myPush( key1, key2="" ):
   kbd.release( key1 )      #押したら戻す
   if key2 != "" :
     kbd.press( key2 )        #ボタンを押す
-    time.sleep( 1*MYDELAY ) #適当な表示待ち
+    time.sleep( 0*MYDELAY ) #適当な表示待ち
     kbd.release( key2 )      #押したら戻す
   kbd.press( Keycode.DOWN_ARROW )
-  time.sleep( 1*MYDELAY ) #適当な表示待ち
+  time.sleep( 0*MYDELAY ) #適当な表示待ち
   kbd.release( Keycode.DOWN_ARROW )
 
 
