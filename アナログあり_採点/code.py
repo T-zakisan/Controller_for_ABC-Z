@@ -222,11 +222,11 @@ while True:
   #アナログ入力の処理
   if FlagAlg==False:  #傾いている時の処理
     #X軸
-    if   (Axis[0].value // 255 - AxisInit[0] ) > +1 * ANALOG : myPush( Keycode.RIGHT_ARROW ) ; FlagAlg = True
-    elif (Axis[0].value // 255 - AxisInit[0] ) < -1 * ANALOG : myPush( Keycode.LEFT_ARROW )  ; FlagAlg = True
+    if   (Axis[0].value // 255 - AxisInit[0] ) > +1 * ANALOG : myPush( Keycode.LEFT_ARROW )  ; FlagAlg = True
+    elif (Axis[0].value // 255 - AxisInit[0] ) < -1 * ANALOG : myPush( Keycode.RIGHT_ARROW ) ; FlagAlg = True
     #Y軸
-    if   (Axis[1].value // 255 - AxisInit[1] ) > +1 * ANALOG : myPush( Keycode.DOWN_ARROW )  ; FlagAlg = True
-    elif (Axis[1].value // 255 - AxisInit[1] ) < -1 * ANALOG : myPush( Keycode.UP_ARROW )    ; FlagAlg = True
+    if   (Axis[1].value // 255 - AxisInit[1] ) > +1 * ANALOG : myPush( Keycode.UP_ARROW )   ; FlagAlg = True
+    elif (Axis[1].value // 255 - AxisInit[1] ) < -1 * ANALOG : myPush( Keycode.DOWN_ARROW ) ; FlagAlg = True
   else:  #傾きが足りない時の処理
     if ( abs( Axis[0].value //255 - AxisInit[0] ) < ANALOG // 2  ) and \
        ( abs( Axis[1].value //255 - AxisInit[1] ) < ANALOG // 2  ) :FlagAlg = False
