@@ -1,5 +1,5 @@
 '''
-2022年10月01日
+2022年12月09日
 ■■■ ABC-Z専用の入力キーボード　for PS用コントローラ ■■■
   採点ソフトABC用にチューニングしたコントローラで、〇、△、☓、次の問題、前の問題、十字キーだけでなく、一括〇などにも対応している。
 
@@ -57,7 +57,7 @@
 NumTAB = 34         #MailSkip時のShift+TABキーを押す回数
 NumSKIPMAIL = 5     #未使用(SkipMailで使用)   MailSkip時に一度に既読にするメール数
 ExDsply = 1.0       #未使用(SkipMailで使用)   学習系の拡大@ディスプレイ設定(default : 100%=1.0, 150%=1.5)
-MYDELAY = 0.1       #遅延時間[秒]　※特に問題なければ触る必要なし！
+MYDELAY = 0.0       #遅延時間[秒]　※特に問題なければ触る必要なし！
 MYSHIFT = 0         #フィルターボタン位置の右方向への移動(左方向は負にする)
 ANALOG = 60         #アナログ入力の動作しきい値(大:大きく倒して反応  小:僅かな傾きで反応　※理論値：0 <= ANALOG <= 127 )
 #################################################################################
@@ -100,17 +100,25 @@ def Allxx( FLAG ) :
 
 ''' Filter '''
 def Fltxx( FLAG ) :
-  MoveOrigin( )                     #原点復帰
-  if   FLAG==0 : mus.move( 338 + MYSHIFT, 76, 0 ) ; nn = 8  #Filter△
-  elif FLAG==1 : mus.move( 325 + MYSHIFT, 76, 0 ) ; nn = 9  #Filter○
-  elif FLAG==2 : mus.move( 351 + MYSHIFT, 76, 0 ) ; nn = 7  #Filterｘ
-  elif FLAG==3 : mus.move( 364 + MYSHIFT, 76, 0 ) ; nn = 6  #Filter□
-  elif FLAG==4 : mus.move( 312 + MYSHIFT, 76, 0 ) ; nn = 10 #FilterCancel
-  elif FLAG==9 : return   
-  mus.click( Mouse.LEFT_BUTTON )    #右クリ
-  myPush( Keycode.ENTER )
-  for ii in range( nn ):
-    myPush( Keycode.TAB ) #TABを押離	※自然な挙動用(カーソル移動)
+  
+  try: FLAG_Past  #過去の状態
+  except NameError: FLAG_Past = 4 #初期設定( フィルターなし )
+
+  if ( FLAG == FLAG_Past ) and ( FLAG == 4 ) :
+    pass  #初期設定 & 変更なし :なにもしない
+  else: 
+    MoveOrigin( )                     #原点復帰
+    if   FLAG==0 : mus.move( 338 + MYSHIFT, 76, 0 ) ; nn = 8  #Filter△
+    elif FLAG==1 : mus.move( 325 + MYSHIFT, 76, 0 ) ; nn = 9  #Filter○
+    elif FLAG==2 : mus.move( 351 + MYSHIFT, 76, 0 ) ; nn = 7  #Filterｘ
+    elif FLAG==3 : mus.move( 364 + MYSHIFT, 76, 0 ) ; nn = 6  #Filter□
+    elif FLAG==4 : mus.move( 312 + MYSHIFT, 76, 0 ) ; nn = 10 #FilterCancel
+    elif FLAG==9 : return
+    mus.click( Mouse.LEFT_BUTTON )    #右クリ
+    myPush( Keycode.ENTER )
+    for ii in range( nn ):
+      myPush( Keycode.TAB ) #TABを押離	※自然な挙動用(カーソル移動)
+  FLAG_Past = FLAG  #過去状態の更新
   return FLAG
 
 
