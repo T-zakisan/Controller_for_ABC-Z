@@ -1,5 +1,5 @@
 '''
-2022年10月01日
+2022年12月09日
 ■■■ ABC-Z専用の入力キーボード　for PS用コントローラ(アナログなし動作確認) ■■■
   プレステのコントローラを採点ソフトABC用にチューニング
   〇、△、☓、次の問題、前の問題、十字キーだけでなく、一括やフィルタにも対応
@@ -30,7 +30,7 @@
 '''
 
 # パラメータ ####################################################################
-MYDELAY = 0.1       #遅延時間[秒]　※特に問題なければ触る必要なし！
+MYDELAY = 0.0       #遅延時間[秒]　※特に問題なければ触る必要なし！
 MYSHIFT = 0         #フィルターボタン位置の右方向への移動(左方向は負にする)
 #################################################################################
 
@@ -70,18 +70,25 @@ def Allxx( FLAG ) :
 
 ''' Filter '''
 def Fltxx( FLAG ) :
-  MoveOrigin( )                     #原点復帰
-  if   FLAG==0 : mus.move( 338 + MYSHIFT, 76, 0 ) ; nn = 8  #Filter△
-  elif FLAG==1 : mus.move( 325 + MYSHIFT, 76, 0 ) ; nn = 9  #Filter○
-  elif FLAG==2 : mus.move( 351 + MYSHIFT, 76, 0 ) ; nn = 7  #Filterｘ
-  elif FLAG==3 : mus.move( 364 + MYSHIFT, 76, 0 ) ; nn = 6  #Filter未
-  elif FLAG==4 : mus.move( 312 + MYSHIFT, 76, 0 ) ; nn = 10 #FilterCancel
-  elif FLAG==9 : return
-  mus.click( Mouse.LEFT_BUTTON )  #右クリ
-  myPush( Keycode.ENTER )         #Enter
-  for ii in range( nn ):
-    myPush( Keycode.TAB ) #TABを押離	※自然な挙動用(カーソル移動)
-  return FLAG #Filter状態を戻す
+  try: FLAG_Past  #過去の状態
+  except NameError: FLAG_Past = 4 #初期設定( フィルターなし )
+
+  if ( FLAG == FLAG_Past ) and ( FLAG == 4 ) :
+    pass  #初期設定 & 変更なし :なにもしない
+  else: 
+    MoveOrigin( )                     #原点復帰
+    if   FLAG==0 : mus.move( 338 + MYSHIFT, 76, 0 ) ; nn = 8  #Filter△
+    elif FLAG==1 : mus.move( 325 + MYSHIFT, 76, 0 ) ; nn = 9  #Filter○
+    elif FLAG==2 : mus.move( 351 + MYSHIFT, 76, 0 ) ; nn = 7  #Filterｘ
+    elif FLAG==3 : mus.move( 364 + MYSHIFT, 76, 0 ) ; nn = 6  #Filter□
+    elif FLAG==4 : mus.move( 312 + MYSHIFT, 76, 0 ) ; nn = 10 #FilterCancel
+    elif FLAG==9 : return
+    mus.click( Mouse.LEFT_BUTTON )    #右クリ
+    myPush( Keycode.ENTER )
+    for ii in range( nn ):
+      myPush( Keycode.TAB ) #TABを押離	※自然な挙動用(カーソル移動)
+  FLAG_Past = FLAG  #過去状態の更新
+  return FLAG
 
 
 
