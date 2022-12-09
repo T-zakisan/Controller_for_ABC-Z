@@ -70,10 +70,8 @@ def Allxx( FLAG ) :
 
 ''' Filter '''
 def Fltxx( FLAG ) :
-  try: FLAG_Past  #過去の状態
-  except NameError: FLAG_Past = 4 #初期設定( フィルターなし )
 
-  if ( FLAG == FLAG_Past ) and ( FLAG == 4 ) :
+  if ( FLAG == MODE[1] ) and ( FLAG == 4 ) :
     pass  #初期設定 & 変更なし :なにもしない
   else: 
     MoveOrigin( )                     #原点復帰
@@ -87,7 +85,8 @@ def Fltxx( FLAG ) :
     myPush( Keycode.ENTER )
     for ii in range( nn ):
       myPush( Keycode.TAB ) #TABを押離	※自然な挙動用(カーソル移動)
-  FLAG_Past = FLAG  #過去状態の更新
+
+  MODE[1] = FLAG  #過去状態の更新
   return FLAG
 
 
@@ -123,7 +122,7 @@ for ii in myKey[0] : #ボタンの数で繰り返し
 ''' Main Loop '''
 FlagAll = False		#R2の状態　※ブロック用
 FlagFlt = False		#L2の状態
-MODE = 4 #Filter解除
+MODE = [ 4, -1 ] #Filter解除
 while True:
   for ii in range( len( GPIO ) ): #ボタンの数で繰り返し　
 
@@ -137,9 +136,9 @@ while True:
       elif myKey[1][4]==ii  : myPush( Keycode.C )  #△
       elif myKey[1][5]==ii  : myPush( Keycode.Z )  #〇
       elif myKey[1][6]==ii  : myPush( Keycode.X )  #✕
-      elif myKey[1][7]==ii  : myPush( Keycode.P ) ; MODE = Fltxx( MODE ) #戻
+      elif myKey[1][7]==ii  : myPush( Keycode.P ) ; MODE[0] = Fltxx( MODE[0] ) #戻
       elif myKey[1][8]==ii  : pass #Filter(L2)
-      elif myKey[1][9]==ii  : myPush( Keycode.N ) ; MODE = Fltxx( MODE ) #次
+      elif myKey[1][9]==ii  : myPush( Keycode.N ) ; MODE[0] = Fltxx( MODE[0] ) #次
       elif myKey[1][10]==ii : pass #ALL(R2)
 
   
@@ -150,14 +149,14 @@ while True:
   if FlagAll==True and GPIO[ myKey[1][5] ].fell : Allxx( 1 ) #All〇
   if FlagAll==True and GPIO[ myKey[1][6] ].fell : Allxx( 2 ) #All×
   # if FlagAll==True and GPIO[ myKey[1][ ] ].fell : Allxx( 3 ) #All--
-  if FlagAll==True and GPIO[ myKey[1][8] ].fell : MODE = Fltxx( 4 ) #Filter解除
+  if FlagAll==True and GPIO[ myKey[1][8] ].fell : MODE[0] = Fltxx( 4 ) #Filter解除
 
 
   # FilterXX(L2+a)
   if GPIO[ myKey[1][8] ].fell: FlagFlt = True	#L2押でフラフ立てる
   if GPIO[ myKey[1][8] ].rose: FlagFlt = False	#L2戻でフラフ下ろす
-  if FlagFlt==True and GPIO[ myKey[1][4] ].fell  : MODE = Fltxx( 0 ) #Filter△
-  if FlagFlt==True and GPIO[ myKey[1][5] ].fell  : MODE = Fltxx( 1 ) #Filter〇
-  if FlagFlt==True and GPIO[ myKey[1][6] ].fell  : MODE = Fltxx( 2 ) #Filter×
+  if FlagFlt==True and GPIO[ myKey[1][4] ].fell  : MODE[0] = Fltxx( 0 ) #Filter△
+  if FlagFlt==True and GPIO[ myKey[1][5] ].fell  : MODE[0] = Fltxx( 1 ) #Filter〇
+  if FlagFlt==True and GPIO[ myKey[1][6] ].fell  : MODE[0] = Fltxx( 2 ) #Filter×
   #if FlagFlt==True and GPIO[ myKey[1][--] ].fell : MODE = Fltxx( 3 ) #Filter--
-  if FlagFlt==True and GPIO[ myKey[1][10] ].fell : MODE = Fltxx( 4 ) #Filter解除
+  if FlagFlt==True and GPIO[ myKey[1][10] ].fell : MODE[0] = Fltxx( 4 ) #Filter解除
