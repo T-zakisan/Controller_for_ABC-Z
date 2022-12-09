@@ -101,10 +101,7 @@ def Allxx( FLAG ) :
 ''' Filter '''
 def Fltxx( FLAG ) :
   
-  try: FLAG_Past  #過去の状態
-  except NameError: FLAG_Past = 4 #初期設定( フィルターなし )
-
-  if ( FLAG == FLAG_Past ) and ( FLAG == 4 ) :
+  if ( FLAG == MODE[1] ) and ( FLAG == 4 ) :
     pass  #初期設定 & 変更なし :なにもしない
   else: 
     MoveOrigin( )                     #原点復帰
@@ -118,7 +115,8 @@ def Fltxx( FLAG ) :
     myPush( Keycode.ENTER )
     for ii in range( nn ):
       myPush( Keycode.TAB ) #TABを押離	※自然な挙動用(カーソル移動)
-  FLAG_Past = FLAG  #過去状態の更新
+
+  MODE[1] = FLAG  #過去状態の更新
   return FLAG
 
 
@@ -217,7 +215,7 @@ RGBLED = neopixel.NeoPixel( board.NEOPIXEL, 1, brightness=1.0 ) #NeoPix Date, LE
 FlagAll = False
 FlagFlt = False
 FlagAlg = False
-MODE = 4 #Filter解除
+MODE = [ 4, -1 ] #Filter解除
 for ii in range( 3 ):
   RGBLED.fill( 0x0000FF ) #青：起動中
   time.sleep( 1*MYDELAY )
@@ -248,9 +246,9 @@ while True:
       elif ii==1 : myPush( Keycode.Z )  #〇
       elif ii==2 : myPush( Keycode.X )  #✕
       elif ii==3 : pass                 #□ 
-      elif ii==4 : myPush( Keycode.P ) ; MODE = Fltxx( MODE ) #戻
+      elif ii==4 : myPush( Keycode.P ) ; MODE[0] = Fltxx( MODE[0] ) #戻
       elif ii==5 : pass #Filter(L2)
-      elif ii==6 : myPush( Keycode.N ) ; MODE = Fltxx( MODE ) #次
+      elif ii==6 : myPush( Keycode.N ) ; MODE[0] = Fltxx( MODE[0] ) #次
       elif ii==7 : pass #ALL(R2)
       elif ii==8 : SkipMail #as you like
     
@@ -261,15 +259,15 @@ while True:
   if FlagAll==True and GPIO[ 1 ].fell : Allxx( 1 ) #All〇
   if FlagAll==True and GPIO[ 2 ].fell : Allxx( 2 ) #All×
   if FlagAll==True and GPIO[ 3 ].fell : Allxx( 3 ) #All□
-  if FlagAll==True and GPIO[ 5 ].fell : MODE = Fltxx( 4 ) #Filter解除
+  if FlagAll==True and GPIO[ 5 ].fell : MODE[0] = Fltxx( 4 ) #Filter解除
  
 
   # FilterXX(L2+a)
   if GPIO[ 5 ].fell: FlagFlt = True   ; RGBLED.fill( 0x00FF00 ) #緑：Filterモード
   if GPIO[ 5 ].rose: FlagFlt = False  ; RGBLED.fill( 0xFFFFFF )
-  if FlagFlt==True and GPIO[ 0 ].fell : MODE = Fltxx( 0 ) #Filter△
-  if FlagFlt==True and GPIO[ 1 ].fell : MODE = Fltxx( 1 ) #Filter〇
-  if FlagFlt==True and GPIO[ 2 ].fell : MODE = Fltxx( 2 ) #Filter×
-  if FlagFlt==True and GPIO[ 3 ].fell : MODE = Fltxx( 3 ) #Filter□
-  if FlagFlt==True and GPIO[ 7 ].fell : MODE = Fltxx( 4 ) #Filter解除
-  if MODE != 4 : RGBLED.fill( 0x00FF00 )  #Filter解除以外(何かしらFilterモード)であれば、緑
+  if FlagFlt==True and GPIO[ 0 ].fell : MODE[0] = Fltxx( 0 ) #Filter△
+  if FlagFlt==True and GPIO[ 1 ].fell : MODE[0] = Fltxx( 1 ) #Filter〇
+  if FlagFlt==True and GPIO[ 2 ].fell : MODE[0] = Fltxx( 2 ) #Filter×
+  if FlagFlt==True and GPIO[ 3 ].fell : MODE[0] = Fltxx( 3 ) #Filter□
+  if FlagFlt==True and GPIO[ 7 ].fell : MODE[0] = Fltxx( 4 ) #Filter解除
+  if MODE[0] != 4 : RGBLED.fill( 0x00FF00 )  #Filter解除以外(何かしらFilterモード)であれば、緑
