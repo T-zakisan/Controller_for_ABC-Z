@@ -100,7 +100,7 @@ def Allxx( FLAG ) :
 
 ''' Filter '''
 def Fltxx( FLAG ) :
-  
+
   if ( FLAG == MODE[1] ) and ( FLAG == 4 ) :
     pass  #初期設定 & 変更なし :なにもしない
   else: 
@@ -161,8 +161,8 @@ def SkipMail(  ):
     time.sleep( 20*MYDELAY )          #適当な表示待ち
   
   #通常モード色
-  if MODE==4 : RGBLED.fill( 0xFFFFFF ) #白
-  else       : RGBLED.fill( 0x00FF00 ) #緑
+  if MODE[0]==4 : RGBLED.fill( 0xFFFFFF ) #白
+  else          : RGBLED.fill( 0x00FF00 ) #緑
 
 
 ''' 任意キーを押して放すヤツ '''
