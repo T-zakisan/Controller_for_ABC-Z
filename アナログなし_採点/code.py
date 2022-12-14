@@ -70,23 +70,18 @@ def Allxx( FLAG ) :
 
 ''' Filter '''
 def Fltxx( FLAG ) :
+  MoveOrigin( )                     #原点復帰
+  if   FLAG==0 : mus.move( 338 + MYSHIFT, 76, 0 ) ; nn = 8  #Filter△
+  elif FLAG==1 : mus.move( 325 + MYSHIFT, 76, 0 ) ; nn = 9  #Filter○
+  elif FLAG==2 : mus.move( 351 + MYSHIFT, 76, 0 ) ; nn = 7  #Filterｘ
+  elif FLAG==3 : mus.move( 364 + MYSHIFT, 76, 0 ) ; nn = 6  #Filter□
+  elif FLAG==4 : mus.move( 312 + MYSHIFT, 76, 0 ) ; nn = 10 #FilterCancel
+  elif FLAG==9 : return
+  mus.click( Mouse.LEFT_BUTTON )    #右クリ
+  myPush( Keycode.ENTER )
+  for ii in range( nn ):
+    myPush( Keycode.TAB ) #TABを押離	※自然な挙動用(カーソル移動)
 
-  if ( FLAG == MODE[1] ) and ( FLAG == 4 ) :
-    pass  #初期設定 & 変更なし :なにもしない
-  else: 
-    MoveOrigin( )                     #原点復帰
-    if   FLAG==0 : mus.move( 338 + MYSHIFT, 76, 0 ) ; nn = 8  #Filter△
-    elif FLAG==1 : mus.move( 325 + MYSHIFT, 76, 0 ) ; nn = 9  #Filter○
-    elif FLAG==2 : mus.move( 351 + MYSHIFT, 76, 0 ) ; nn = 7  #Filterｘ
-    elif FLAG==3 : mus.move( 364 + MYSHIFT, 76, 0 ) ; nn = 6  #Filter□
-    elif FLAG==4 : mus.move( 312 + MYSHIFT, 76, 0 ) ; nn = 10 #FilterCancel
-    elif FLAG==9 : return
-    mus.click( Mouse.LEFT_BUTTON )    #右クリ
-    myPush( Keycode.ENTER )
-    for ii in range( nn ):
-      myPush( Keycode.TAB ) #TABを押離	※自然な挙動用(カーソル移動)
-
-  MODE[1] = FLAG  #過去状態の更新
   return FLAG
 
 
@@ -136,9 +131,9 @@ while True:
       elif myKey[1][4]==ii  : myPush( Keycode.C )  #△
       elif myKey[1][5]==ii  : myPush( Keycode.Z )  #〇
       elif myKey[1][6]==ii  : myPush( Keycode.X )  #✕
-      elif myKey[1][7]==ii  : myPush( Keycode.P ) ; MODE[0] = Fltxx( MODE[0] ) #戻
+      elif myKey[1][7]==ii  : myPush( Keycode.P ) ; MODE = Fltxx( MODE ) #戻
       elif myKey[1][8]==ii  : pass #Filter(L2)
-      elif myKey[1][9]==ii  : myPush( Keycode.N ) ; MODE[0] = Fltxx( MODE[0] ) #次
+      elif myKey[1][9]==ii  : myPush( Keycode.N ) ; MODE = Fltxx( MODE ) #次
       elif myKey[1][10]==ii : pass #ALL(R2)
 
   
@@ -149,14 +144,14 @@ while True:
   if FlagAll==True and GPIO[ myKey[1][5] ].fell : Allxx( 1 ) #All〇
   if FlagAll==True and GPIO[ myKey[1][6] ].fell : Allxx( 2 ) #All×
   # if FlagAll==True and GPIO[ myKey[1][ ] ].fell : Allxx( 3 ) #All--
-  if FlagAll==True and GPIO[ myKey[1][8] ].fell : MODE[0] = Fltxx( 4 ) #Filter解除
+  if FlagAll==True and GPIO[ myKey[1][8] ].fell : MODE = Fltxx( 4 ) #Filter解除
 
 
   # FilterXX(L2+a)
   if GPIO[ myKey[1][8] ].fell: FlagFlt = True	#L2押でフラフ立てる
   if GPIO[ myKey[1][8] ].rose: FlagFlt = False	#L2戻でフラフ下ろす
-  if FlagFlt==True and GPIO[ myKey[1][4] ].fell  : MODE[0] = Fltxx( 0 ) #Filter△
-  if FlagFlt==True and GPIO[ myKey[1][5] ].fell  : MODE[0] = Fltxx( 1 ) #Filter〇
-  if FlagFlt==True and GPIO[ myKey[1][6] ].fell  : MODE[0] = Fltxx( 2 ) #Filter×
+  if FlagFlt==True and GPIO[ myKey[1][4] ].fell  : MODE = Fltxx( 0 ) #Filter△
+  if FlagFlt==True and GPIO[ myKey[1][5] ].fell  : MODE = Fltxx( 1 ) #Filter〇
+  if FlagFlt==True and GPIO[ myKey[1][6] ].fell  : MODE = Fltxx( 2 ) #Filter×
   #if FlagFlt==True and GPIO[ myKey[1][--] ].fell : MODE = Fltxx( 3 ) #Filter--
-  if FlagFlt==True and GPIO[ myKey[1][10] ].fell : MODE[0] = Fltxx( 4 ) #Filter解除
+  if FlagFlt==True and GPIO[ myKey[1][10] ].fell : MODE = Fltxx( 4 ) #Filter解除
