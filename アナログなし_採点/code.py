@@ -117,7 +117,7 @@ for ii in myKey[0] : #ボタンの数で繰り返し
 ''' Main Loop '''
 FlagAll = False		#R2の状態　※ブロック用
 FlagFlt = False		#L2の状態
-MODE = [ 4, -1 ] #Filter解除
+MODE = 4 #Filter解除
 while True:
   for ii in range( len( GPIO ) ): #ボタンの数で繰り返し　
 
