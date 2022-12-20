@@ -117,6 +117,7 @@ https://user-images.githubusercontent.com/43605763/186742775-77fb4bad-561c-4811-
 |:---:|:---:|:---|:---|:---|
 | アナログなし | SCPH-1010 | 無印, A, H, M, F | ? | いわゆるPS1 |
 | ↑ | SCPH-1080 | 無印, A, H, M | ？ | ↑ |
+| ↑ | SCPH-1000R | △ | ？ | 時間を要する |
 | アナログ | SCPH-1150 | A | ？ | 別刻印については不明 |
 | DUALSHOCK | SCPH-1200 | 無印, A, H | M | --- |
 | DUALSHOCK2 | SCPH-10010 | なし | 全て | --- |
