@@ -27,7 +27,8 @@ https://user-images.githubusercontent.com/43605763/186742775-77fb4bad-561c-4811-
 - 上記説明サイトの"LED Flash Tutorial"以降は不要
 - PC上で、Seeed XIAO PR2040 が "CIRCUITPY"と表示されたらok
 
-![image](https://user-images.githubusercontent.com/43605763/208616898-c671e703-2697-4af7-b3cc-6ee92c2b51ec.png)
+
+![image](https://user-images.githubusercontent.com/43605763/208617930-e2527756-ff21-485f-a371-8c3d41a6aba6.png)
 
 
 
