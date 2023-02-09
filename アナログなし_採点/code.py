@@ -1,8 +1,10 @@
 '''
-2022年12月09日
+2023年2月03日
 ■■■ ABC-Z専用の入力キーボード　for PS用コントローラ(アナログなし動作確認) ■■■
   プレステのコントローラを採点ソフトABC用にチューニング
   〇、△、☓、次の問題、前の問題、十字キーだけでなく、一括やフィルタにも対応
+  Zoom機能追加（2023/02/03）
+  
 ■動作と対応ボタン
 [シングル]
     ボタン   |     機能     
@@ -13,6 +15,7 @@
      R1      |   次
    Select    |   機能なし
    Start     |   機能なし
+   
 [コンビネーション] ※L2/R2を先に押す！
         |     L2     |     R2     |
 -----------------------------------
@@ -21,6 +24,15 @@
    △   |   一括△   |   △のみ   |
    上   |   一括未   |   未のみ   |←未実装！必要に応じて追加してみてください！
    L2   |    ----    |   全表示   | フィルター解除
+   
+[Zoom]
+ L2+十字キー
+ 上 ↑ 拡大x1
+ 下 ↓ 縮小x1
+ 右 → 拡大x5
+ 左 ← 縮小x5
+
+
 ■使用条件
 ・ディスプレイの拡大を100%（デスクトップ上で右クリック > ディスプレイ設定 > 拡大と縮小 : 100%）
 ・外部ディスプレイ使用していて、以下の2項目が該当している場合、想定している動作にならないため、ディスプレイ配置(ディスプレイ設定)を変更すること！
@@ -86,6 +98,26 @@ def Fltxx( FLAG ) :
 
 
 
+''' Zoom '''
+def Zoom( FLAG ):
+  
+  kbd.press( Keycode.SHIFT )
+  for ii in range( 4 ):
+    myPush( Keycode.TAB ) #TABを押離	※自然な挙動用(カーソル移動)
+  kbd.release( Keycode.SHIFT )
+  
+  if  (FLAG==0) : myPush( Keycode.UP_ARROW )   #1拡大
+  elif(FLAG==1) : myPush( Keycode.DOWN_ARROW ) #1縮小
+  elif(FLAG==2) :
+    for ii in range(5) : myPush( Keycode.UP_ARROW )   #5拡大
+  elif(FLAG==3) :
+    for ii in range(5) : myPush( Keycode.DOWN_ARROW ) #5縮小
+
+  for ii in range( 3 ):
+    myPush( Keycode.TAB ) #TABを押離	※自然な挙動用(カーソル移動)
+
+
+
 ''' 任意キーを押して放すヤツ '''
 def myPush( key ):
   kbd.press( key )        #ボタンを押す
@@ -145,6 +177,12 @@ while True:
   if FlagAll==True and GPIO[ myKey[1][6] ].fell : Allxx( 2 ) #All×
   # if FlagAll==True and GPIO[ myKey[1][ ] ].fell : Allxx( 3 ) #All--
   if FlagAll==True and GPIO[ myKey[1][8] ].fell : MODE = Fltxx( 4 ) #Filter解除
+
+  if FlagAll==True and GPIO[ myKey[1][0] ].fell : Zoom( 0 ) #1拡大
+  if FlagAll==True and GPIO[ myKey[1][2] ].fell : Zoom( 1 ) #1縮小
+  if FlagAll==True and GPIO[ myKey[1][3] ].fell : Zoom( 2 ) #5拡大
+  if FlagAll==True and GPIO[ myKey[1][1] ].fell : Zoom( 3 ) #5縮小
+
 
 
   # FilterXX(L2+a)
